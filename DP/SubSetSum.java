@@ -18,13 +18,25 @@ public class SubSetSum {
     static boolean solve(int[] arr, int sum) {
         int n = arr.length;
         boolean t[][] = new boolean[n+1][sum+1];
+
+		// Initialize first column as true.
+		// 0 sum is possible with all elements.
+		for (int i = 0; i <= n; i++)
+			t[i][0] = true;
+	
+		// Initialize top row, except dp[0][0],
+		// as false. With 0 elements, no other
+		// sum except 0 is possible
+		for (int i = 1; i <= sum; i++)
+			t[0][i] = false;
+
         for(int i = 0; i < n+1; i++) {
             for(int j = 0; j < sum+1; j++) {
-                if(i == 0)
-                    t[i][j] = false;
-                else if(j == 0)
-                    t[i][j] = true;
-                else if(arr[i-1] <= j)
+                // if(i == 0)
+                //     t[i][j] = false;
+                // else if(j == 0)
+                //     t[i][j] = true;
+                if(arr[i-1] <= j)
                     t[i][j] = t[i-1][j - arr[i-1]] || t[i-1][j];
                 else
                     t[i][j] = t[i-1][j];
